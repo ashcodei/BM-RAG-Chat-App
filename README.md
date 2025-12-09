@@ -1,5 +1,4 @@
-# RAG from Scratch – My Little PDF Brain
-
+# RAG from Scratch – A Bare Metal RAG App
 This project started because I wanted to **actually understand how RAG works**, not just glue together LangChain blocks and pretend I do.
 
 So I built a small system that:
