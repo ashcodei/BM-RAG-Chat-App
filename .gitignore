@@ -1,0 +1,29 @@
+# Node / frontend
+node_modules/
+dist/
+.vite/
+*.log
+package-lock.json
+
+# Python / backend
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+.env.local
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# RAG data
+data
+data/index/
+# If you don't want user PDFs in the repo, uncomment:
+# data/pdfs/
+
+# Misc
+*.tmp

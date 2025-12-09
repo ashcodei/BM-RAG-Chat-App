@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Math RAG Workspace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CDN + your exact config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "ui-sans-serif",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Helvetica",
+                "Apple Color Emoji",
+                "Arial",
+                "sans-serif",
+                "Segoe UI Emoji",
+                "Segoe UI Symbol",
+              ],
+            },
+            colors: {
+              notion: {
+                bg: "#FFFFFF",
+                sidebar: "#F7F7F5",
+                border: "#E9E9E7",
+                text: "#37352F",
+                dim: "#9B9A97",
+                hover: "#EFEFEF",
+                select: "#E5E5E5",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Your exact custom CSS -->
+    <style>
+      /* Custom Scrollbar */
+      html, body, #root {
+        height: 100%;
+        width: 100% !important;
+        margin: 0;
+        padding: 0;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #d1d1d1;
+      }
+
+      /* Utilities */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .fade-mask-right {
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+          to right,
+          black 85%,
+          transparent 100%
+        );
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-msg {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+
+      .shimmer {
+        background: linear-gradient(
+          90deg,
+          #9b9a97 0%,
+          #6b6b6b 20%,
+          #d3d1cb 50%,
+          #6b6b6b 80%,
+          #9b9a97 100%
+        );
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 1.4s infinite linear;
+      }
+      @keyframes shimmer {
+        100% {
+          background-position: -100% 0;
+        }
+      }
+
+      /* Sidebar Transition */
+      #sidebar {
+        transition: width 0.3s ease, padding 0.3s ease;
+      }
+      .sidebar-closed {
+        width: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+      }
+
+      /* Message Bubbles */
+      .msg-user {
+        background-color: #f1f1ef;
+        color: #37352f;
+        border-radius: 4px;
+      }
+      .msg-bot {
+        background-color: transparent;
+        color: #37352f;
+      }
+
+      /* Details Summary toggle */
+      details > summary {
+        list-style: none;
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+      details[open] summary svg {
+        transform: rotate(90deg);
+      }
+
+      /* Header Transition for overlap fix */
+      #chat-header-content {
+        transition: margin-left 0.3s ease;
+      }
+
+      /* Collapsible Header States - Smooth Bouncy Transitions */
+      #upload-zone {
+        transition: padding 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .collapsed-zone {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+      }
+
+      #top-actions-row {
+        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        max-height: 40px;
+        opacity: 1;
+        margin-bottom: 0.5rem;
+      }
+      .collapsed-zone #top-actions-row {
+        max-height: 0;
+        opacity: 0;
+        margin-bottom: 0;
+        pointer-events: none;
+      }
+
+      #large-drop-wrapper {
+        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        max-height: 120px;
+        opacity: 1;
+      }
+      .collapsed-zone #large-drop-wrapper {
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #mini-upload-btn,
+      #mini-import-btn {
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        margin-right: 0;
+      }
+      .collapsed-zone #mini-upload-btn {
+        width: 32px;
+        opacity: 1;
+        margin-right: 0.5rem;
+      }
+      .collapsed-zone #mini-import-btn {
+        width: 32px;
+        opacity: 1;
+        margin-right: 0.5rem;
+      }
+
+      #library-container {
+        transition: margin-top 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .scroll-control-active {
+        opacity: 1 !important;
+      }
+    </style>
+  </head>
+  <body class="h-screen flex overflow-hidden text-notion-text bg-notion-bg text-sm md:text-base selection:bg-[#cce9ff]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
